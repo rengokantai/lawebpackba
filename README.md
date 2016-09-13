@@ -124,3 +124,70 @@ module.exports = {
     filename:'[name].bundle.js'
   },
 ```
+#####Using the commons chunk bundle
+```
+var CommonsChunkPlugin = require('./node_modules/webpack/lib/optimize/CommonsChunkPlugin')
+```
+Update:
+```
+module.exports = {
+  entry: './src/main.js,
+  output:{
+    path:'build',
+    filename:'bundle.js'
+  },
+  module:{
+    loaders:[
+      {
+        test:/\.js$/,
+        exclude:/(node_modules)/,
+        loader:'babel',
+        query:{
+          presets:['es2015']
+        }
+      },
+      {
+        test:/\.css$/,
+        loader:'style-loader!css-loader'
+      }
+    ]
+  },
+  plugins:[
+    new CommonsChunkPlugin('commons','commons.bundle.js')//bundle all
+  ]
+}
+```
+#####Bundling vendor files
+
+#### webpack dev server
+#####Setting up the webpack-dev-server
+```
+module.exports = {
+  entry: './dist/app.js,
+  output:{
+    path:'build',
+    filename:'bundle.js'
+  },
+  devServer:{
+    inline:true,
+    contentBase:'./build',
+    port:3000
+  },
+  module:{
+    loaders:[
+      {
+        test:/\.js$/,
+        exclude:/(node_modules)/,
+        loader:'babel',
+        query:{
+          presets:['es2015']
+        }
+      },
+      {
+        test:/\.css$/,
+        loader:'style-loader!css-loader'
+      }
+    ]
+  }
+}
+```
