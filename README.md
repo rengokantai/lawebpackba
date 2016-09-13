@@ -60,6 +60,7 @@ babel-core babel-loader babel-preset-es2015
 npm install coffee-loader
 ```
 ####3 webpack and CSS
+#####Basic
 ```
 module.exports = {
   entry: './src/main.js,
@@ -84,4 +85,42 @@ module.exports = {
     ]
   }
 }
+```
+#####Transpiling Sass with webpack
+```
+npm install sass-loader node-sass --save-dev
+```
+small change
+```
+{
+  test:/\.scss$/,
+  loader:'style-loader!css-loader!sass-loader'
+}
+```
+#####Loading images with webpack
+```
+npm install url-loader file-loader --save-dev
+```
+add loader
+```
+{
+  test:/\.(png|jpg)$/,
+  loader:'url-loader?limit=20000'  //if bigger than 20k ,create url asset
+}
+```
+####4 Code splitting
+#####Adding multiple entry points
+create bundle respectively
+```
+var webpack = require('webpack');
+var path = require('path');
+module.exports = {
+  entry:{ 
+    a:'./dist/a',
+    b:'./dist/b'
+  },
+  output:{
+    path:path.join(__dirname,'build'),
+    filename:'[name].bundle.js'
+  },
 ```
